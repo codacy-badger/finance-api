@@ -46,6 +46,8 @@ class App {
     this.app.use((req, res) => {
       return res.sendStatus(501);
     });
+
+    this.app.use(Middleware.ErrorHandler.errorHandlerMiddleware);
   }
 
   async startServer() {
