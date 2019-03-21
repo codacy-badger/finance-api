@@ -1,14 +1,14 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 
-const TestHelper = require('../test-helper/');
+const TestHelper = require('../../test-helper/');
 
 const assert = chai.assert;
 const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe('Integration - GET /', function() {
+describe('Integration - GET /users', function() {
   let server;
   const testHelper = new TestHelper();
 
@@ -23,7 +23,7 @@ describe('Integration - GET /', function() {
 
   it('should return 501', async function() {
     const res = await chai.request(server)
-      .get('/')
+      .get('/users')
       .set('Content-Type', 'application/vnd.api+json');
     expect(res).to.have.status(501);
     assert.deepEqual(res.body, {});

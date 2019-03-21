@@ -9,6 +9,7 @@
   },
   "rules": {
     "arrow-body-style": ["error", "always"],
+    "class-methods-use-this": ["off"],
     "func-names": ["off"],
     "indent": ["error", 2],
     "jsx-a11y/href-no-hash": ["off"],

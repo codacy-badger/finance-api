@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "migration:generate": "sequelize migration:generate",
     "start": "node index",
     "test": "NODE_ENV=test mocha --recursive tests"
   },
@@ -25,6 +26,7 @@
     "express-session": "1.15.6",
     "express-validator": "5.3.1",
     "jsonwebtoken": "8.5.0",
+    "lodash": "4.17.11",
     "nconf": "0.10.0",
     "pg": "7.9.0",
     "scrypt": "6.0.3",
@@ -43,6 +45,7 @@
     "eslint-plugin-import": "2.16.0",
     "eslint-plugin-jsx-a11y": "6.2.1",
     "eslint-plugin-react": "7.12.4",
-    "mocha": "6.0.2"
+    "mocha": "6.0.2",
+    "sinon": "7.2.7"
   }
 }

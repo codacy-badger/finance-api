@@ -1,0 +1,49 @@
+const getToken = require('./get-token');
+const signUp = require('./sign-up');
+
+class UserCtrl {
+  constructor(parent, models) {
+    this.parent = parent;
+    this.models = models;
+    this.jwtAlgorithm = 'HS256';
+    this.hashParams = {
+      N: 16384,
+      r: 8,
+      p: 1,
+    };
+    this.tokenExpiresIn = 7200;
+  }
+
+  async getToken(userUuid) {
+    return getToken({
+      userCtrl: this,
+      userUuid,
+    });
+  }
+
+  /**
+   * @param {string} auditApiCallUuid
+   * @param {string} email
+   * @param {string} firstName
+   * @param {string} lastName
+   * @param {string} password
+   */
+  async signUp({
+    auditApiCallUuid,
+    email,
+    firstName,
+    lastName,
+    password,
+  }) {
+    return signUp({
+      auditApiCallUuid,
+      email,
+      firstName,
+      lastName,
+      password,
+      userCtrl: this,
+    });
+  }
+}
+
+module.exports = UserCtrl;

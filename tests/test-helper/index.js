@@ -7,6 +7,8 @@ class TestHelper {
     if (!this.app || !this.server) {
       throw new Error('App not yet initialized.');
     }
+    const models = this.app.get('models');
+    await models.sequelize.connectionManager.close();
     await this.server.close();
   }
 
@@ -30,13 +32,53 @@ class TestHelper {
   }
 
   async setup() {
-    this.app = new App({
+    const app = new App({
       logger: {
         error: () => {},
         info: () => {},
       },
     });
-    this.server = await this.app.startServer();
+    this.app = app.app;
+    this.server = await app.startServer();
+  }
+
+  async truncateTables() {
+    const models = this.app.get('models');
+    await models.Audit.Change.destroy({
+      cascade: true,
+      force: true,
+      truncate: true,
+    });
+    await models.Audit.Log.destroy({
+      cascade: true,
+      force: true,
+      truncate: true,
+    });
+    await models.Audit.ApiCall.destroy({
+      cascade: true,
+      force: true,
+      truncate: true,
+    });
+    await models.UserLogin.destroy({
+      cascade: true,
+      force: true,
+      truncate: true,
+    });
+    await models.User.destroy({
+      cascade: true,
+      force: true,
+      truncate: true,
+    });
+    await models.Household.destroy({
+      cascade: true,
+      force: true,
+      truncate: true,
+    });
+    await models.Hash.destroy({
+      cascade: true,
+      force: true,
+      truncate: true,
+    });
   }
 }
 

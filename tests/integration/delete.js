@@ -1,5 +1,6 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
+
 const TestHelper = require('../test-helper/');
 
 const assert = chai.assert;
@@ -23,7 +24,7 @@ describe('Integration - DELETE /', function() {
   it('should return 501', async function() {
     const res = await chai.request(server)
       .delete('/')
-      .set('Content-Type', 'application/json');
+      .set('Content-Type', 'application/vnd.api+json');
     expect(res).to.have.status(501);
     assert.deepEqual(res.body, {});
   });
