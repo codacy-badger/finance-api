@@ -17,6 +17,8 @@ class App {
     this.app.set('models', new Models(nconf.get('DATABASE_URL')));
     this.app.set('controllers', new Controllers(this.app.get('models')));
     this.app.set('Auditor', new Middleware.Auditor(this.app.get('models')));
+    const Authentication = Middleware.Authentication();
+    this.app.set('Authentication', Authentication);
     this.app.set('Validator', Middleware.Validator);
 
     this.app.use(bodyParser.urlencoded({
@@ -40,6 +42,8 @@ class App {
       }
       return next();
     });
+
+    this.app.use(Authentication.checkBearerAuth);
 
     routes(this.app);
 

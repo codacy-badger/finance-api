@@ -1,6 +1,11 @@
+const CATEGORY_NOT_FOUND = 'CATEGORY_NOT_FOUND';
 const LOGIN_PASSWORD_FAILED = 'LOGIN_PASSWORD_FAILED';
 
 const errorResponses = {
+  [CATEGORY_NOT_FOUND]: {
+    message: 'Category not found.',
+    status: 404,
+  },
   [LOGIN_PASSWORD_FAILED]: {
     message: 'Invalid email/password combination.',
     status: 403,
@@ -8,6 +13,7 @@ const errorResponses = {
 };
 
 module.exports = {
+  CATEGORY_NOT_FOUND,
   errorHandlerMiddleware(err, req, res, next) {
     if (err.code
         && Object.keys(errorResponses).includes(err.code)
