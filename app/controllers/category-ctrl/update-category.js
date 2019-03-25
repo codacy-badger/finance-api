@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize');
 
+const { CATEGORY_NOT_FOUND } = require('../../middleware/errorHandler');
+
 /**
  * @param {string} auditApiCallUuid
  * @param {object} categoryCtrl Instance of CategoryCtrl
@@ -50,7 +52,9 @@ module.exports = async({
     },
   });
   if (!category) {
-    throw new Error('Not found');
+    const error = new Error('Not found');
+    error.code = CATEGORY_NOT_FOUND;
+    throw error;
   }
 
   if (name !== category.get('name')) {
@@ -67,7 +71,9 @@ module.exports = async({
       },
     });
     if (!parentCategory) {
-      throw new Error('Unauthorized');
+      const error = new Error('Parent category not found');
+      error.code = CATEGORY_NOT_FOUND;
+      throw error;
     }
     category.set('parent_uuid', parentCategory.get('uuid'));
   } else if (category.get('parent_uuid')
