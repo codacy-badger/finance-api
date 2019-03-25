@@ -1,5 +1,6 @@
 const { body } = require('express-validator/check');
 
+const deleteFn = require('./delete');
 const getFn = require('./get');
 const patchFn = require('./patch');
 
@@ -9,6 +10,11 @@ module.exports = (router, app) => {
   const Validator = app.get('Validator');
 
   router.route('/:uuid')
+    .delete(
+      Authentication.UserAuth.can('access-account'),
+      Auditor.trackApiCall(),
+      deleteFn(app),
+    )
     .get(
       Authentication.UserAuth.can('access-account'),
       getFn(app),
