@@ -28,6 +28,7 @@ module.exports = (app) => {
         auditApiCallUuid: req.auditApiCallUuid,
         categoryUuid: req.params.uuid,
         name: req.body.data.attributes.name,
+        parentUuid: req.body.data.attributes['parent-uuid'],
       });
 
       const category = await models.Category.findOne({

@@ -12,6 +12,7 @@ module.exports = (app) => {
    * @apiSuccess (200) {object} data.attributes
    * @apiSuccess (200) {string} data.attributes[created-at]
    * @apiSuccess (200) {string} data.attributes.name
+   * @apiSuccess (200) {string} data.attributes[parent-uuid]
    * @apiSuccess (200) {string} data.id
    * @apiSuccess (200) {string} data.type
    *
@@ -36,7 +37,7 @@ module.exports = (app) => {
       }
 
       const category = await models.Category.findOne({
-        attributes: ['created_at', 'name', 'uuid'],
+        attributes: ['created_at', 'name', 'parent_uuid', 'uuid'],
         where: {
           household_uuid: user.get('household_uuid'),
           uuid: req.params.uuid,
@@ -53,6 +54,7 @@ module.exports = (app) => {
           'attributes': {
             'created-at': category.get('created_at'),
             'name': category.get('name'),
+            'parent-uuid': category.get('parent_uuid'),
           },
           'id': category.get('uuid'),
           'type': 'categories',
