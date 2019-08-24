@@ -1,6 +1,9 @@
 const Sequelize = require('sequelize');
 
-const { CATEGORY_NOT_FOUND } = require('../../middleware/errorHandler');
+const {
+  CATEGORY_CANNOT_DELETE,
+  CATEGORY_NOT_FOUND,
+} = require('../../middleware/errorHandler');
 
 /**
  * @param {string} auditApiCallUuid
@@ -58,7 +61,9 @@ module.exports = async({
     },
   });
   if (childCategoryCount > 0) {
-    throw new Error('Cannot delete a parent category');
+    const error = new Error('Cannot delete a parent category');
+    error.code = CATEGORY_CANNOT_DELETE;
+    throw error;
   }
 
   await models.sequelize.transaction({

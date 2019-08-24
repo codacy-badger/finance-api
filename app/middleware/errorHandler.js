@@ -1,7 +1,12 @@
+const CATEGORY_CANNOT_DELETE = 'CATEGORY_CANNOT_DELETE';
 const CATEGORY_NOT_FOUND = 'CATEGORY_NOT_FOUND';
 const LOGIN_PASSWORD_FAILED = 'LOGIN_PASSWORD_FAILED';
 
 const errorResponses = {
+  [CATEGORY_CANNOT_DELETE]: {
+    message: 'Cannot delete when there are subcategories remaining.',
+    status: 422,
+  },
   [CATEGORY_NOT_FOUND]: {
     message: 'Category not found.',
     status: 404,
@@ -13,6 +18,7 @@ const errorResponses = {
 };
 
 module.exports = {
+  CATEGORY_CANNOT_DELETE,
   CATEGORY_NOT_FOUND,
   errorHandlerMiddleware(err, req, res, next) {
     if (err.code
